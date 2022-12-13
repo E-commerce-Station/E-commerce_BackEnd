@@ -262,4 +262,4 @@ src/Ecommerce.Blazor.Server/Logs/*
 src/Ecommerce.Blazor.Server.Tiered/Logs/*
 
 # Use abp install-libs to restore.
-**/wwwroot/libs/*
+#**/wwwroot/libs/*
