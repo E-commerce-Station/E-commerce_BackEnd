@@ -27,7 +27,7 @@
 
     $('#keyword').keypress(function (event) {
         var keycode = (event.keyCode ? event.keyCode : event.which);
-        if (keycode == consts.key_code_enter) {
+        if (keycode == 13) {
             Search();
         }
     });

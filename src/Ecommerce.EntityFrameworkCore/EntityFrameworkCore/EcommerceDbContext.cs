@@ -1,5 +1,4 @@
-﻿using Ecommerce.Examples;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
 using Volo.Abp.Data;
@@ -8,7 +7,7 @@ using Volo.Abp.EntityFrameworkCore;
 using Volo.Abp.FeatureManagement.EntityFrameworkCore;
 using Volo.Abp.Identity;
 using Volo.Abp.Identity.EntityFrameworkCore;
-using Volo.Abp.IdentityServer.EntityFrameworkCore;
+using Volo.Abp.OpenIddict.EntityFrameworkCore;
 using Volo.Abp.PermissionManagement.EntityFrameworkCore;
 using Volo.Abp.SettingManagement.EntityFrameworkCore;
 using Volo.Abp.TenantManagement;
@@ -24,6 +23,7 @@ using Ecommerce.DocumentFiles;
 using Ecommerce.ProductDocumentFiles;
 using Ecommerce.Orders;
 using Ecommerce.OrderDetails;
+using Ecommerce.Examples;
 
 namespace Ecommerce.EntityFrameworkCore;
 
@@ -85,8 +85,11 @@ public class EcommerceDbContext :
 
     public DbSet<OrderDetail> OrderDetails { get; set; }
 
-    public EcommerceDbContext(DbContextOptions<EcommerceDbContext> options) : base(options)
-    {}
+    public EcommerceDbContext(DbContextOptions<EcommerceDbContext> options)
+        : base(options)
+    {
+
+    }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -99,7 +102,7 @@ public class EcommerceDbContext :
         builder.ConfigureBackgroundJobs();
         builder.ConfigureAuditLogging();
         builder.ConfigureIdentity();
-        builder.ConfigureIdentityServer();
+        builder.ConfigureOpenIddict();
         builder.ConfigureFeatureManagement();
         builder.ConfigureTenantManagement();
 

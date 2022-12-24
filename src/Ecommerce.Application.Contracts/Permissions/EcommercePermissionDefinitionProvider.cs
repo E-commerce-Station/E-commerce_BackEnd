@@ -14,6 +14,10 @@ public class EcommercePermissionDefinitionProvider : PermissionDefinitionProvide
         examplePermission.AddChild(EcommercePermissions.Example.Create, L("Permission:Create"));
         examplePermission.AddChild(EcommercePermissions.Example.Update, L("Permission:Update"));
         examplePermission.AddChild(EcommercePermissions.Example.Delete, L("Permission:Delete"));
+
+        var customerPermission = myGroup.AddPermission(EcommercePermissions.Customer.Default, L("Permission:Customer"));
+
+        
         //Define your own permissions here. Example:
         //myGroup.AddPermission(EcommercePermissions.MyPermission1, L("Permission:MyPermission1"));
     }

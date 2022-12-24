@@ -38,4 +38,9 @@ public class ExampleAppService : CrudAppService<Example, ExampleDto, Guid, Paged
         listResultDto.Items =ObjectMapper.Map<List<Example>, List<ExampleDto>>(result.Skip(condition.SkipCount).Take(condition.MaxResultCount).ToList());
         return listResultDto;
     }
+
+    public async Task<bool> IsDeleted()
+    {
+        return true;
+    }
 }

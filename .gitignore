@@ -254,7 +254,7 @@ paket-files/
 # Ecommerce
 src/Ecommerce.Web/Logs/*
 src/Ecommerce.Web.Host/Logs/*
-src/Ecommerce.IdentityServer/Logs/*
+src/Ecommerce.AuthServer/Logs/*
 src/Ecommerce.HttpApi.Host/Logs/*
 src/Ecommerce.HttpApi.HostWithIds/Logs/*
 src/Ecommerce.DbMigrator/Logs/*
@@ -262,4 +262,4 @@ src/Ecommerce.Blazor.Server/Logs/*
 src/Ecommerce.Blazor.Server.Tiered/Logs/*
 
 # Use abp install-libs to restore.
-#**/wwwroot/libs/*
+**/wwwroot/libs/*

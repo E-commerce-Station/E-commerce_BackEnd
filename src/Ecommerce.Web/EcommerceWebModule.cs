@@ -1,4 +1,3 @@
-using System;
 using System.IO;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Extensions.DependencyInjection;
@@ -11,17 +10,17 @@ using Ecommerce.Localization;
 using Ecommerce.MultiTenancy;
 using Ecommerce.Web.Menus;
 using Microsoft.OpenApi.Models;
+using OpenIddict.Validation.AspNetCore;
 using Volo.Abp;
 using Volo.Abp.Account.Web;
-using Volo.Abp.AspNetCore.Authentication.JwtBearer;
 using Volo.Abp.AspNetCore.Mvc;
 using Volo.Abp.AspNetCore.Mvc.Localization;
 using Volo.Abp.AspNetCore.Mvc.UI;
 using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap;
 using Volo.Abp.AspNetCore.Mvc.UI.Bundling;
 using Volo.Abp.AspNetCore.Mvc.UI.MultiTenancy;
-using Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic;
-using Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic.Bundling;
+using Volo.Abp.AspNetCore.Mvc.UI.Theme.LeptonXLite;
+using Volo.Abp.AspNetCore.Mvc.UI.Theme.LeptonXLite.Bundling;
 using Volo.Abp.AspNetCore.Mvc.UI.Theme.Shared;
 using Volo.Abp.AspNetCore.Serilog;
 using Volo.Abp.Autofac;
@@ -42,14 +41,14 @@ using Volo.Abp.VirtualFileSystem;
 namespace Ecommerce.Web;
 
 [DependsOn(
+    typeof(EcommerceHttpApiModule),
     typeof(EcommerceApplicationModule),
     typeof(EcommerceEntityFrameworkCoreModule),
     typeof(AbpAutofacModule),
     typeof(AbpIdentityWebModule),
     typeof(AbpSettingManagementWebModule),
-    typeof(AbpAccountWebIdentityServerModule),
-    typeof(AbpAspNetCoreMvcUiBasicThemeModule),
-    typeof(AbpAspNetCoreAuthenticationJwtBearerModule),
+    typeof(AbpAccountWebOpenIddictModule),
+    typeof(AbpAspNetCoreMvcUiLeptonXLiteThemeModule),
     typeof(AbpTenantManagementWebModule),
     typeof(AbpAspNetCoreSerilogModule),
     typeof(AbpSwashbuckleModule)
@@ -69,6 +68,16 @@ public class EcommerceWebModule : AbpModule
                 typeof(EcommerceWebModule).Assembly
             );
         });
+        
+        PreConfigure<OpenIddictBuilder>(builder =>
+        {
+            builder.AddValidation(options =>
+            {
+                options.AddAudiences("Ecommerce");
+                options.UseLocalServer();
+                options.UseAspNetCore();
+            });
+        });
     }
 
     public override void ConfigureServices(ServiceConfigurationContext context)
@@ -76,15 +85,20 @@ public class EcommerceWebModule : AbpModule
         var hostingEnvironment = context.Services.GetHostingEnvironment();
         var configuration = context.Services.GetConfiguration();
 
+        ConfigureAuthentication(context);
         ConfigureUrls(configuration);
         ConfigureBundles();
-        ConfigureAuthentication(context, configuration);
         ConfigureAutoMapper();
         ConfigureVirtualFileSystem(hostingEnvironment);
         ConfigureLocalizationServices();
         ConfigureNavigationServices();
         ConfigureAutoApiControllers();
         ConfigureSwaggerServices(context.Services);
+    }
+    
+    private void ConfigureAuthentication(ServiceConfigurationContext context)
+    {
+        context.Services.ForwardIdentityAuthenticationForBearer(OpenIddictValidationAspNetCoreDefaults.AuthenticationScheme);
     }
 
     private void ConfigureUrls(IConfiguration configuration)
@@ -100,7 +114,7 @@ public class EcommerceWebModule : AbpModule
         Configure<AbpBundlingOptions>(options =>
         {
             options.StyleBundles.Configure(
-                BasicThemeBundles.Styles.Global,
+                LeptonXLiteThemeBundles.Styles.Global,
                 bundle =>
                 {
                     bundle.AddFiles("/global-styles.css");
@@ -108,20 +122,7 @@ public class EcommerceWebModule : AbpModule
             );
         });
     }
-
-    private void ConfigureAuthentication(ServiceConfigurationContext context, IConfiguration configuration)
-    {
-        context.Services.AddAuthentication()
-            .AddJwtBearer(options =>
-            {
-                options.Authority = configuration["AuthServer:Authority"];
-                options.RequireHttpsMetadata = Convert.ToBoolean(configuration["AuthServer:RequireHttpsMetadata"]);
-                options.Audience = "Ecommerce";
-            });
-
-        context.Services.ForwardIdentityAuthenticationForBearer();
-    }
-
+    
     private void ConfigureAutoMapper()
     {
         Configure<AbpAutoMapperOptions>(options =>
@@ -136,7 +137,7 @@ public class EcommerceWebModule : AbpModule
         {
             Configure<AbpVirtualFileSystemOptions>(options =>
             {
-                    options.FileSets.ReplaceEmbeddedByPhysical<EcommerceDomainSharedModule>(Path.Combine(hostingEnvironment.ContentRootPath, $"..{Path.DirectorySeparatorChar}Ecommerce.Domain.Shared"));
+                options.FileSets.ReplaceEmbeddedByPhysical<EcommerceDomainSharedModule>(Path.Combine(hostingEnvironment.ContentRootPath, $"..{Path.DirectorySeparatorChar}Ecommerce.Domain.Shared"));
                 options.FileSets.ReplaceEmbeddedByPhysical<EcommerceDomainModule>(Path.Combine(hostingEnvironment.ContentRootPath, $"..{Path.DirectorySeparatorChar}Ecommerce.Domain"));
                 options.FileSets.ReplaceEmbeddedByPhysical<EcommerceApplicationContractsModule>(Path.Combine(hostingEnvironment.ContentRootPath, $"..{Path.DirectorySeparatorChar}Ecommerce.Application.Contracts"));
                 options.FileSets.ReplaceEmbeddedByPhysical<EcommerceApplicationModule>(Path.Combine(hostingEnvironment.ContentRootPath, $"..{Path.DirectorySeparatorChar}Ecommerce.Application"));
@@ -149,7 +150,26 @@ public class EcommerceWebModule : AbpModule
     {
         Configure<AbpLocalizationOptions>(options =>
         {
-            options.Languages.Add(new LanguageInfo("vi", "vi", "Vietnamese"));
+            options.Languages.Add(new LanguageInfo("ar", "ar", "العربية"));
+            options.Languages.Add(new LanguageInfo("cs", "cs", "Čeština"));
+            options.Languages.Add(new LanguageInfo("en", "en", "English"));
+            options.Languages.Add(new LanguageInfo("en-GB", "en-GB", "English (UK)"));
+            options.Languages.Add(new LanguageInfo("hu", "hu", "Magyar"));
+            options.Languages.Add(new LanguageInfo("fi", "fi", "Finnish"));
+            options.Languages.Add(new LanguageInfo("fr", "fr", "Français"));
+            options.Languages.Add(new LanguageInfo("hi", "hi", "Hindi", "in"));
+            options.Languages.Add(new LanguageInfo("is", "is", "Icelandic", "is"));
+            options.Languages.Add(new LanguageInfo("it", "it", "Italiano", "it"));
+            options.Languages.Add(new LanguageInfo("pt-BR", "pt-BR", "Português"));
+            options.Languages.Add(new LanguageInfo("ro-RO", "ro-RO", "Română"));
+            options.Languages.Add(new LanguageInfo("ru", "ru", "Русский"));
+            options.Languages.Add(new LanguageInfo("sk", "sk", "Slovak"));
+            options.Languages.Add(new LanguageInfo("tr", "tr", "Türkçe"));
+            options.Languages.Add(new LanguageInfo("zh-Hans", "zh-Hans", "简体中文"));
+            options.Languages.Add(new LanguageInfo("zh-Hant", "zh-Hant", "繁體中文"));
+            options.Languages.Add(new LanguageInfo("de-DE", "de-DE", "Deutsch", "de"));
+            options.Languages.Add(new LanguageInfo("es", "es", "Español"));
+            options.Languages.Add(new LanguageInfo("el", "el", "Ελληνικά"));
         });
     }
 
@@ -202,7 +222,7 @@ public class EcommerceWebModule : AbpModule
         app.UseStaticFiles();
         app.UseRouting();
         app.UseAuthentication();
-        app.UseJwtTokenMiddleware();
+        app.UseAbpOpenIddictValidation();
 
         if (MultiTenancyConsts.IsEnabled)
         {
@@ -210,7 +230,6 @@ public class EcommerceWebModule : AbpModule
         }
 
         app.UseUnitOfWork();
-        app.UseIdentityServer();
         app.UseAuthorization();
         app.UseSwagger();
         app.UseAbpSwaggerUI(options =>
