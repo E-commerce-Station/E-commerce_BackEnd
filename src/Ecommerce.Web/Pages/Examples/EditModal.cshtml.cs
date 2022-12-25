@@ -14,7 +14,7 @@ public class EditModalModel : EcommercePageModel
     public Guid Id { get; set; }
 
     [BindProperty]
-    public CreateEditExampleViewModel ViewModel { get; set; }
+    public CreateEditCustomerViewModel ViewModel { get; set; }
 
     private readonly IExampleAppService _service;
 
@@ -26,12 +26,12 @@ public class EditModalModel : EcommercePageModel
     public virtual async Task OnGetAsync()
     {
         var dto = await _service.GetAsync(Id);
-        ViewModel = ObjectMapper.Map<ExampleDto, CreateEditExampleViewModel>(dto);
+        ViewModel = ObjectMapper.Map<ExampleDto, CreateEditCustomerViewModel>(dto);
     }
 
     public virtual async Task<IActionResult> OnPostAsync()
     {
-        var dto = ObjectMapper.Map<CreateEditExampleViewModel, CreateUpdateExampleDto>(ViewModel);
+        var dto = ObjectMapper.Map<CreateEditCustomerViewModel, CreateUpdateExampleDto>(ViewModel);
         await _service.UpdateAsync(Id, dto);
         return NoContent();
     }

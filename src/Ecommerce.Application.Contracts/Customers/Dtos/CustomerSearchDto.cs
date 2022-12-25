@@ -1,6 +1,6 @@
-﻿namespace Ecommerce.Examples.Dtos
+﻿namespace Ecommerce.Customers.Dtos
 {
-    public class ExampleSearchDto
+    public class CustomerSearchDto
     {
         public string Filter { get; set; }
 

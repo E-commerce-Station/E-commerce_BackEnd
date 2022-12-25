@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace Ecommerce.Web.Pages.Customers;
+namespace Ecommerce.Web.Pages.Examples;
 
 public class IndexModel : EcommercePageModel
 {

@@ -24,11 +24,32 @@ public class EcommerceMenuContributor : IMenuContributor
         var administration = context.Menu.GetAdministration();
         var l = context.GetLocalizer<EcommerceResource>();
 
-        if (await context.IsGrantedAsync(EcommercePermissions.Example.Default))
+        if(await context.IsGrantedAsync(EcommercePermissions.Example.Default))
         {
             context.Menu.Items.Insert(1,
                 new ApplicationMenuItem(EcommerceMenus.Example, l["Menu:Example"], "/Examples", icon: "fa fa-flag", order: 1)
                );
+        }
+
+        if(await context.IsGrantedAsync(EcommercePermissions.Product.Default))
+        {
+            context.Menu.Items.Insert(1,
+                new ApplicationMenuItem(EcommerceMenus.Product, l["Menu:Product"], "/Products", icon: "fa fa-mobile", order: 1)
+                );
+        }
+
+        if(await context.IsGrantedAsync(EcommercePermissions.Category.Default))
+        {
+            context.Menu.Items.Insert(1,
+                new ApplicationMenuItem(EcommerceMenus.Category, l["Menu:Category"], "/Categories", icon: "fa fa-window-restore", order: 1)
+                );
+        }
+
+        if(await context.IsGrantedAsync(EcommercePermissions.Customer.Default))
+        {
+            context.Menu.Items.Insert(1,
+                new ApplicationMenuItem(EcommerceMenus.Customer, l["Menu:Customer"], "/Customers", icon: "fa fa-user-o", order: 1)
+                );
         }
 
         context.Menu.Items.Insert(

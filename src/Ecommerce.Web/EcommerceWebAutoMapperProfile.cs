@@ -8,8 +8,8 @@ public class EcommerceWebAutoMapperProfile : Profile
 {
     public EcommerceWebAutoMapperProfile()
     {
-        CreateMap<ExampleDto, CreateEditExampleViewModel>();
-        CreateMap<CreateEditExampleViewModel, CreateUpdateExampleDto>();
+        CreateMap<ExampleDto, CreateEditCustomerViewModel>();
+        CreateMap<CreateEditCustomerViewModel, CreateUpdateExampleDto>();
         //Define your AutoMapper configuration here for the Web project.
     }
 }

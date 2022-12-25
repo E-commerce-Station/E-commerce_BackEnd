@@ -3,6 +3,7 @@ using Ecommerce.Permissions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
@@ -33,14 +34,9 @@ public class ExampleAppService : CrudAppService<Example, ExampleDto, Guid, Paged
     {
         PagedResultDto<ExampleDto> listResultDto = new PagedResultDto<ExampleDto>();
         var queryable = await _repository.GetQueryableAsync();
-        var result = queryable.Where(x => x.Name.Contains(condition.Keyword));
+        var result = queryable.Where(x => string.IsNullOrEmpty(condition.Filter) || x.Name.Contains(condition.Filter));
         listResultDto.TotalCount = result.Count();
-        listResultDto.Items =ObjectMapper.Map<List<Example>, List<ExampleDto>>(result.Skip(condition.SkipCount).Take(condition.MaxResultCount).ToList());
+        listResultDto.Items =ObjectMapper.Map<List<Example>, List<ExampleDto>>(result.Skip(condition.SkipCount).Take(condition.MaxResultCount).OrderBy(condition.Sorting).ToList());
         return listResultDto;
-    }
-
-    public async Task<bool> IsDeleted()
-    {
-        return true;
     }
 }

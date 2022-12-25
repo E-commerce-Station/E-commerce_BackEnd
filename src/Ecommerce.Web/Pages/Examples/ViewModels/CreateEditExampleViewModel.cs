@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Ecommerce.Web.Pages.Examples.ViewModels;
 
-public class CreateEditExampleViewModel
+public class CreateEditCustomerViewModel
 {
     [Display(Name = "ExampleName")]
     public string Name { get; set; }
