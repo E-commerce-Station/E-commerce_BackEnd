@@ -9,7 +9,7 @@ namespace Ecommerce.Web.Pages.Examples;
 public class CreateModalModel : EcommercePageModel
 {
     [BindProperty]
-    public CreateEditExampleViewModel ViewModel { get; set; }
+    public CreateEditCustomerViewModel ViewModel { get; set; }
 
     private readonly IExampleAppService _service;
 
@@ -20,7 +20,7 @@ public class CreateModalModel : EcommercePageModel
 
     public virtual async Task<IActionResult> OnPostAsync()
     {
-        var dto = ObjectMapper.Map<CreateEditExampleViewModel, CreateUpdateExampleDto>(ViewModel);
+        var dto = ObjectMapper.Map<CreateEditCustomerViewModel, CreateUpdateExampleDto>(ViewModel);
         await _service.CreateAsync(dto);
         return NoContent();
     }

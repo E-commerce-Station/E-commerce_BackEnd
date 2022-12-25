@@ -25,82 +25,21 @@
     <abp-style src="/Pages/Examples/index.css"/>
 }
 
-<section class="content-header">
-    <div class="container-fluid">
+<div id="CustomersWrapper" class="card">
+    <div class="card-header">
         <div class="row">
-            <div class="col-sm-6">
-                <h1>@L["Example"]</h1>
+            <div class="col-md-6">
+                <h5 class="card-title">@L["Example"]</h5>
             </div>
-            <div class="text-right col-md-6">
+            <div class="text-end col-md-6">
                 @if (await Authorization.IsGrantedAsync(EcommercePermissions.Example.Create))
-                {
-                <abp-button id="NewExampleButton" class="btn btn-primary"
-                            text="@L["CreateExample"].Value"
-                            icon="plus"
-                            button-type="Primary" />
-                }
+                    {
+                        <button id="NewExampleButton" name="CreateTenant" class="mx-1 btn btn-primary btn-sm" type="button" data-busy-text="Đang xử lý..."><i class="fa fa-plus"></i> <span>@L["Example:CreateExample"].Value</span></button>
+                    }
             </div>
         </div>
     </div>
-</section>
-
-<section class="content">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-12">
-                <div class="card card-search">
-                   
-                    <!-- /.box-header -->
-                    <div class="card-body">
-                        <div class="form-group search-form-group">
-                            <label for="search">@L["Key"].Value</label>
-                            <div class="input-group search-input-group">
-                                <input type="text" id="keyword" class="form-control search-form-control" 
-                                       placeholder="@L["PlaceHolder"].Value">
-                                <span class="input-group-append">
-                                    <button type="button" class="btn btn-search" id="Search">
-                                        <span>@L["Search"].Value</span>
-                                    </button>
-                                </span>
-                            </div>
-                            <span class="text-danger field-validation-valid" data-valmsg-for="search" data-valmsg-replace="true">
-                            </span>
-                        </div>
-                    </div>
-                    <!-- /.box-body -->
-                </div>
-            </div>
-        </div>
+    <div class="card-body">
+        <table class="nowrap table table-striped"></table>
     </div>
-</section>
-
-<section class="content">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="dataTables_wrapper dt-bootstrap4">
-                            
-                            <div class="row">
-                                <div class="table-responsive col-sm-12">
-                                    <table id="ExampleTable" class="table table-bordered table-hover dataTable dtr-inline nowrap" role="grid" >
-                                        <thead>
-                                            <tr role="row">
-                                                <th>@L["STT"].Value</th>
-                                                <th>@L["ExampleName"].Value</th>
-                                                <th>@L["ExampleNote"].Value</th>
-                                                <th></th>
-                                            </tr>
-                                        </thead>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
+</div>

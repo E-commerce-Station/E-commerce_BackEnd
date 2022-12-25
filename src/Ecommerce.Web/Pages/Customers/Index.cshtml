@@ -1,0 +1,40 @@
+﻿@page
+@using Ecommerce.Permissions
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Volo.Abp.AspNetCore.Mvc.UI.Layout
+@using Ecommerce.Web.Pages.Examples
+@using Ecommerce.Localization
+@using Ecommerce.Web.Menus
+@model IndexModel
+@inject IPageLayout PageLayout
+@inject IHtmlLocalizer<EcommerceResource> L
+@inject IAuthorizationService Authorization
+@{
+    PageLayout.Content.Title = L["Customer"].Value;
+    PageLayout.Content.BreadCrumb.Add(L["Menu:Customer"].Value);
+    PageLayout.Content.MenuItemName = EcommerceMenus.Customer;
+}
+
+@section scripts
+{
+    <abp-script src="/Pages/Customers/index.js" />
+}
+@section styles
+{
+    <abp-style src="/Pages/Customers/index.css"/>
+}
+
+<div id="CustomersWrapper" class="card">
+    <div class="card-header">
+        <div class="row">
+            <div class="col-md-6">
+                <h5 class="card-title">@L["Customer"]</h5>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <table class="nowrap table table-striped"></table>
+    </div>
+</div>
+

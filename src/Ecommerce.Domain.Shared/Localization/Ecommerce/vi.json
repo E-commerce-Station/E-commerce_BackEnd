@@ -2,7 +2,30 @@
   "culture": "vi",
   "texts": {
     "Menu:Home": "Trang chủ",
+    "Menu:Product": "Quản lý sản phẩm",
+    "Menu:Category": "Quản lý thể loại",
+    "Menu:Option": "Quản lý tùy chọn sản phẩm",
+    "Menu:Customer": "Quản lý người dùng",
+    "Menu:Example": "Mẫu quản lý",
+
+    "Example": "Mẫu",
+    "Example:Name": "Tên",
+    "Example:Note": "Ghi chú",
+    "Example:CreateExample": "Tạo ghi chú mới",
+
+    "Customer": "Khách hàng",
+    "Customer:Email": "Thư điện tử",
+    "Customer:Name": "Họ và Tên",
+    "Customer:Address": "Địa chỉ",
+    "Customer:Phone": "Số điện thoại",
+    "Customer:CCCD": "Căn cước công dân",
+
+    "Permission:Customer": "Phân quyền khách hàng",
+
     "Welcome": "Chào mừng bạn",
-    "LongWelcomeMessage": "Chào mừng bạn đến ứng dụng. Đây là một dự án khởi nghiệp dựa trên khung ABP. Để biết thêm thông tin, hãy truy cập abp.io."
+    "LongWelcomeMessage": "Chào mừng bạn đến ứng dụng. Đây là một trang web quản lý cửa hàng điện thoại",
+    "Key": "Từ khóa",
+    "PlaceHolder": "Nhập từ khóa",
+    "Search": "Tìm kiếm"
   }
 }
