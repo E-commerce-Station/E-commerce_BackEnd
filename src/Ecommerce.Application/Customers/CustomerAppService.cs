@@ -25,5 +25,12 @@ namespace Ecommerce.Customers
             }
             return true;
         }
+        public async Task<bool> UpdateUser (string name, string password, string email, string address, string country, string phone, string  cccd){
+            var user = (await _customerRepository.GetQueryableAsync()).FirstOrDefault(x =>x.Name == name && x.Password == password && x.Email == email && x.Address == address && x.Country == country && x.Phone==phone && x.CCCD==cccd);
+            if(user == null){
+                return  false;
+            }
+            return true;
+        }
     }
 }
