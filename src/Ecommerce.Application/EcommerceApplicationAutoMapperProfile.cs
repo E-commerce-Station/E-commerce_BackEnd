@@ -53,7 +53,7 @@ public class EcommerceApplicationAutoMapperProfile : Profile
         CreateMap<CreateUpdateOrderDetailDto, OrderDetail>();
 
         // Order
-        CreateMap<Order, OrderDto>();
+        CreateMap<Order, OrderDto>().ForMember(x => x.CustomerName, y => y.MapFrom(u => u.Customer.Name));
         CreateMap<CreateUpdateOrderDto, Order>();
 
         // ProductCategory

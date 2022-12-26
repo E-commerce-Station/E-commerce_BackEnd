@@ -1,11 +1,11 @@
 ﻿(function () {
     var l = abp.localization.getResource('Ecommerce');
-    var _service = ecommerce.examples.example;
+    var _service = ecommerce.categories.category;
     var _editModal = new abp.ModalManager(
-        abp.appPath + 'Examples/EditModal'
+        abp.appPath + 'Categories/EditModal'
     );
     var _createModal = new abp.ModalManager(
-        abp.appPath + 'Examples/CreateModal'
+        abp.appPath + 'Categories/CreateModal'
     );
 
     _createModal.onResult(function () {
@@ -16,21 +16,21 @@
         _dataTable.ajax.reload();
     });
 
-    $('#NewExampleButton').click(function (e) {
+    $('#NewCategoryButton').click(function (e) {
         e.preventDefault();
         _createModal.open();
     });
 
     var _dataTable = null;
 
-    abp.ui.extensions.entityActions.get('example').addContributor(
+    abp.ui.extensions.entityActions.get('category').addContributor(
         function (actionList) {
             return actionList.addManyTail(
                 [
                     {
                         text: l('Edit'),
                         visible: abp.auth.isGranted(
-                            'Ecommerce.Example.Update'
+                            'Ecommerce.Category.Update'
                         ),
                         action: function (data) {
                             _editModal.open({
@@ -41,7 +41,7 @@
                     {
                         text: l('Delete'),
                         visible: abp.auth.isGranted(
-                            'Ecommerce.Example.Delete'
+                            'Ecommerce.Category.Delete'
                         ),
                         confirmMessage: function (data) {
                             return l(
@@ -63,7 +63,7 @@
         }
     );
 
-    abp.ui.extensions.tableColumns.get('example').addContributor(
+    abp.ui.extensions.tableColumns.get('category').addContributor(
         function (columnList) {
             columnList.addManyTail(
                 [
@@ -79,17 +79,23 @@
                         width: "5%"
                     },
                     {
-                        title: l("Example:Name"),
+                        title: l("Category:Name"),
                         data: 'name',
                     },
                     {
-                        title: l("Example:Note"),
-                        data: 'note',
+                        title: l("Category:Note"),
+                        data: 'description',
+                    },
+                    {
+                        title: l("Category:Thumbnail"),
+                        data: 'thumbnail',
+                        render: function(data) { return '<span class="' + data + '"></span>' },
+                        orderable: false
                     },
                     {
                         title: l("Actions"),
                         rowAction: {
-                            items: abp.ui.extensions.entityActions.get('example').actions.toArray()
+                            items: abp.ui.extensions.entityActions.get('category').actions.toArray()
                         },
                         width: "12%"
                     }
@@ -100,7 +106,7 @@
     );
 
     $(function () {
-        var _$wrapper = $('#ExamplesWrapper');
+        var _$wrapper = $('#CategoryWrapper');
 
         _dataTable = _$wrapper.find('table').DataTable(
             abp.libs.datatables.normalizeConfiguration({
@@ -110,7 +116,7 @@
                 scrollX: true,
                 serverSide: true,
                 ajax: abp.libs.datatables.createAjax(_service.search),
-                columnDefs: abp.ui.extensions.tableColumns.get('example').columns.toArray(),
+                columnDefs: abp.ui.extensions.tableColumns.get('category').columns.toArray(),
             })
         );
 
@@ -122,12 +128,12 @@
             _dataTable.ajax.reload();
         });
 
-        _$wrapper.find('button[name=CreateExample]').click(function (e) {
+        _$wrapper.find('button[name=CreateCategory]').click(function (e) {
             e.preventDefault();
             _createModal.open();
         });
 
-        _$wrapper.find('button[name=EditExample]').click(function (e) {
+        _$wrapper.find('button[name=EditCategory]').click(function (e) {
             e.preventDefault();
             _editModal.open({
                 id: 'id'

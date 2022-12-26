@@ -33,6 +33,7 @@ public class EcommercePermissionDefinitionProvider : PermissionDefinitionProvide
         documentFilePermission.AddChild(EcommercePermissions.DocumentFile.Delete, L("Permission:Delete"));
 
         var orderPermission = myGroup.AddPermission(EcommercePermissions.Order.Default, L("Permission:Order"));
+        orderPermission.AddChild(EcommercePermissions.Order.UpdateStatus, L("Permission:UpdateStatus"));
 
         var optionPermission = myGroup.AddPermission(EcommercePermissions.Option.Default, L("Permission:Option"));
         optionPermission.AddChild(EcommercePermissions.Option.Create, L("Permission:Create"));

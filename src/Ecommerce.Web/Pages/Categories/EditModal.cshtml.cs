@@ -1,11 +1,11 @@
-using Ecommerce.Examples;
-using Ecommerce.Examples.Dtos;
-using Ecommerce.Web.Pages.Examples.ViewModels;
+using Ecommerce.Categories;
+using Ecommerce.Categories.Dtos;
+using Ecommerce.Web.Pages.Category.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
 
-namespace Ecommerce.Web.Pages.Examples;
+namespace Ecommerce.Web.Pages.Category;
 
 public class EditModalModel : EcommercePageModel
 {
@@ -14,11 +14,11 @@ public class EditModalModel : EcommercePageModel
     public Guid Id { get; set; }
 
     [BindProperty]
-    public CreateEditExampleViewModel ViewModel { get; set; }
+    public CreateEditCategoryViewModel ViewModel { get; set; }
 
-    private readonly IExampleAppService _service;
+    private readonly ICategoryAppService _service;
 
-    public EditModalModel(IExampleAppService service)
+    public EditModalModel(ICategoryAppService service)
     {
         _service = service;
     }
@@ -26,12 +26,12 @@ public class EditModalModel : EcommercePageModel
     public virtual async Task OnGetAsync()
     {
         var dto = await _service.GetAsync(Id);
-        ViewModel = ObjectMapper.Map<ExampleDto, CreateEditExampleViewModel>(dto);
+        ViewModel = ObjectMapper.Map<CategoryDto, CreateEditCategoryViewModel>(dto);
     }
 
     public virtual async Task<IActionResult> OnPostAsync()
     {
-        var dto = ObjectMapper.Map<CreateEditExampleViewModel, CreateUpdateExampleDto>(ViewModel);
+        var dto = ObjectMapper.Map<CreateEditCategoryViewModel, CreateUpdateCategoryDto>(ViewModel);
         await _service.UpdateAsync(Id, dto);
         return NoContent();
     }

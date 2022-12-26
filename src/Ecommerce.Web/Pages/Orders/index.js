@@ -1,28 +1,29 @@
 ﻿(function () {
     var l = abp.localization.getResource('Ecommerce');
-    var _service = ecommerce.customers.customer;
-
+    var _service = ecommerce.orders.order;
     var _dataTable = null;
 
-    abp.ui.extensions.entityActions.get('customer').addContributor(
+    abp.ui.extensions.entityActions.get('order').addContributor(
         function (actionList) {
             return actionList.addManyTail(
                 [
                     {
-                        text: l('Order'),
+                        text: l('Edit'),
                         visible: abp.auth.isGranted(
-                            'Ecommerce.Order'
+                            'Ecommerce.Example.Update'
                         ),
                         action: function (data) {
-                            location.href = "./Orders";
+                            _editModal.open({
+                                id: data.record.id,
+                            });
                         },
                     },
                 ]
             );
         }
     );
-      
-    abp.ui.extensions.tableColumns.get('customer').addContributor(
+
+    abp.ui.extensions.tableColumns.get('order').addContributor(
         function (columnList) {
             columnList.addManyTail(
                 [
@@ -38,32 +39,30 @@
                         width: "5%"
                     },
                     {
-                        title: l("Customer:Name"),
-                        data: 'name',
+                        title: l("Order:CustomerName"),
+                        data: 'customerName',
+                        orderable: false
                     },
                     {
-                        title: l("Customer:Email"),
-                        data: 'email',
+                        title: l("Order:ShippingAddress"),
+                        data: 'shippingAddress',
                     },
                     {
-                        title: l("Customer:Address"),
-                        data: { address: 'address', country: 'country' },
-                        render: function (data) {
-                            return data.address + ',' + data.country;
-                        }
+                        title: l("Order:OrderDate"),
+                        data: 'orderDate',
                     },
                     {
-                        title: l("Customer:Phone"),
-                        data: 'phone',
+                        title: l("Order:Ammount"),
+                        data: 'ammount',
                     },
                     {
-                        title: l("Customer:Email"),
-                        data: 'cccd',
+                        title: l("Order:Status"),
+                        data: 'status',
                     },
                     {
                         title: l("Actions"),
                         rowAction: {
-                            items: abp.ui.extensions.entityActions.get('customer').actions.toArray()
+                            items: abp.ui.extensions.entityActions.get('order').actions.toArray()
                         },
                         width: "12%"
                     }
@@ -74,17 +73,17 @@
     );
 
     $(function () {
-        var _$wrapper = $('#CustomersWrapper');
+        var _$wrapper = $('#OrdersWrapper');
 
         _dataTable = _$wrapper.find('table').DataTable(
             abp.libs.datatables.normalizeConfiguration({
-                order: [1, 'asc'],
+                order: [2, 'asc'],
                 processing: true,
                 paging: true,
                 scrollX: true,
                 serverSide: true,
                 ajax: abp.libs.datatables.createAjax(_service.search),
-                columnDefs: abp.ui.extensions.tableColumns.get('customer').columns.toArray(),
+                columnDefs: abp.ui.extensions.tableColumns.get('order').columns.toArray(),
             })
         );
     });
