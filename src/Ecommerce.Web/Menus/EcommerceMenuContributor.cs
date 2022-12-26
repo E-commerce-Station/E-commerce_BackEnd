@@ -52,6 +52,13 @@ public class EcommerceMenuContributor : IMenuContributor
                 );
         }
 
+        if(await context.IsGrantedAsync(EcommercePermissions.Order.Default))
+        {
+            context.Menu.Items.Insert(1,
+                new ApplicationMenuItem(EcommerceMenus.Order, l["Menu:Order"], "/Orders", icon: "fa fa-list", order: 1)
+                );
+        }
+
         context.Menu.Items.Insert(
             0,
             new ApplicationMenuItem(

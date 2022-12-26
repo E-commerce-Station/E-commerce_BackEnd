@@ -44,6 +44,7 @@ public static class EcommercePermissions
     public class Order
     {
         public const string Default = GroupName + ".Order";
+        public const string UpdateStatus = Default + ".UpdateStatus";
     }
 
     public class Option

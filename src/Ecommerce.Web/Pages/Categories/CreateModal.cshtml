@@ -1,17 +1,16 @@
 @page
-@using Ecommerce.Localization
 @using Microsoft.AspNetCore.Mvc.Localization
 @using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Modal;
+@using Ecommerce.Localization
 @inject IHtmlLocalizer<EcommerceResource> L
-@model Ecommerce.Web.Pages.Examples.EditModalModel
+@model Ecommerce.Web.Pages.Category.CreateModalModel
 @{
     Layout = null;
 }
-<abp-dynamic-form abp-model="ViewModel" data-ajaxForm="true" asp-page="EditModal">
+<abp-dynamic-form abp-model="ViewModel" data-ajaxForm="true" asp-page="CreateModal">
     <abp-modal>
-        <abp-modal-header title="@L["Example:Update"].Value"></abp-modal-header>
+        <abp-modal-header title="@L["Category:Create"].Value"></abp-modal-header>
         <abp-modal-body>
-            <abp-input asp-for="Id" />
             <abp-form-content />
         </abp-modal-body>
         <abp-modal-footer buttons="@(AbpModalButtons.Cancel|AbpModalButtons.Save)"></abp-modal-footer>

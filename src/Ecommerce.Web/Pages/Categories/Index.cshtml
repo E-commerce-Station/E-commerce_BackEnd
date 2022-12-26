@@ -3,7 +3,7 @@
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.AspNetCore.Mvc.Localization
 @using Volo.Abp.AspNetCore.Mvc.UI.Layout
-@using Ecommerce.Web.Pages.Examples
+@using Ecommerce.Web.Pages.Category
 @using Ecommerce.Localization
 @using Ecommerce.Web.Menus
 @model IndexModel
@@ -11,32 +11,32 @@
 @inject IHtmlLocalizer<EcommerceResource> L
 @inject IAuthorizationService Authorization
 @{
-    PageLayout.Content.Title = L["Example"].Value;
-    PageLayout.Content.BreadCrumb.Add(L["Menu:Example"].Value);
-    PageLayout.Content.MenuItemName = EcommerceMenus.Example;
+    PageLayout.Content.Title = L["Category"].Value;
+    PageLayout.Content.BreadCrumb.Add(L["Menu:Category"].Value);
+    PageLayout.Content.MenuItemName = EcommerceMenus.Category;
 }
 
 @section scripts
 {
-    <abp-script src="/Pages/Examples/index.js" />
+    <abp-script src="/Pages/Categories/index.js" />
 }
 @section styles
 {
-    <abp-style src="/Pages/Examples/index.css"/>
+    <abp-style src="/Pages/Categories/index.css"/>
 }
 
-<div id="ExamplesWrapper" class="card">
+<div id="CategoryWrapper" class="card">
     <div class="card-header">
         <div class="row">
             <div class="col-md-6">
-                <h5 class="card-title">@L["Example"]</h5>
+                <h5 class="card-title">@L["Category"]</h5>
             </div>
             <div class="text-end col-md-6">
-                @if (await Authorization.IsGrantedAsync(EcommercePermissions.Example.Create))
+                @if (await Authorization.IsGrantedAsync(EcommercePermissions.Category.Create))
                     {
-                        <button id="NewExampleButton" name="CreateExample" class="mx-1 btn btn-primary btn-sm" type="button" data-busy-text="Đang xử lý...">
+                        <button id="NewCategoryButton" name="CreateTenant" class="mx-1 btn btn-primary btn-sm" type="button" data-busy-text="Đang xử lý...">
                             <i class="fa fa-plus"></i> 
-                            <span>@L["Example:Create"].Value</span>
+                            <span>@L["Category:Create"].Value</span>
                         </button>
                     }
             </div>
