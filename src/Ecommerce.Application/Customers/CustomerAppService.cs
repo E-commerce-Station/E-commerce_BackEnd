@@ -23,6 +23,11 @@ namespace Ecommerce.Customers
         public async Task<CustomerDto> CheckLoginAsync (string userName, string password)
         {
             var user = (await _customerRepository.GetQueryableAsync()).FirstOrDefault(x => (x.Email == userName || x.Phone == userName) && x.Password == password);
+
+            if (user == null)
+            {
+                return null;
+            }
             
             return ObjectMapper.Map<Customer, CustomerDto>(user);
         }
@@ -39,5 +44,13 @@ namespace Ecommerce.Customers
 
             return listResultDto;
         }
+
+        public async Task<List<CustomerDto>> GetAllCustomerAsync()
+        {
+            var listResult = await _customerRepository.GetListAsync();
+
+            return ObjectMapper.Map<List<Customer>, List<CustomerDto>>(listResult);
+        }
+
     }
 }

@@ -9,12 +9,12 @@
             return actionList.addManyTail(
                 [
                     {
-                        text: l('Order'),
+                        text: l('Customer:Order'),
                         visible: abp.auth.isGranted(
                             'Ecommerce.Order'
                         ),
                         action: function (data) {
-                            location.href = "./Orders";
+                            location.href = "./Orders?CustomerId=" + data.record.id;
                         },
                     },
                 ]
