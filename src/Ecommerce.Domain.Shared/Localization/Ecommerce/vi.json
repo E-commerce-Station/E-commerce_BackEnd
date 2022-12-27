@@ -3,12 +3,16 @@
   "texts": {
     "Menu:Home": "Trang chủ",
     "Menu:Product": "Quản lý sản phẩm",
-    "Menu:Category": "Quản lý thể loại",
+    "Menu:Category": "Quản lý danh mục",
     "Menu:Option": "Quản lý tùy chọn sản phẩm",
     "Menu:Customer": "Quản lý người dùng",
     "Menu:Example": "Mẫu quản lý",
+    "Menu:Order":"Quản lý đơn đặt hàng",
 
     "Permission:Customer": "Phân quyền khách hàng",
+    "Permission:Category": "Phân quyền danh mục",
+    "Permission:Order": "Phân quyền đơn đặt hàng",
+    "Permission:Product": "Phân quyền sản phẩm",
 
     "Example": "Mẫu",
     "Example:Name": "Tên",
