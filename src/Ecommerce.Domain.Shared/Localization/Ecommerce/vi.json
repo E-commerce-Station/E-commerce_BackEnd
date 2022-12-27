@@ -33,14 +33,16 @@
     "Customer:Address": "Địa chỉ",
     "Customer:Phone": "Số điện thoại",
     "Customer:CCCD": "Căn cước công dân",
+    "Customer:Order": "Lịch sử đơn hàng",
 
-    "Orders": "Đơn hàng",
-    "Orders:Ammount": "Số lượng",
-    "Orders:ShippingAddress": "Địa chỉ giao hàng",
-    "Orders:OrderAddress": "Địa chỉ đặt hàng",
-    "Orders:OrderEmail": "Email",
-    "Orders:OrderDate": "Ngày đặt hàng",
-    "Orders:OrderStatus": "Trạng thái đặt hàng",
+    "Order": "Đơn hàng",
+    "Order:Ammount": "Số lượng",
+    "Order:ShippingAddress": "Địa chỉ giao hàng",
+    "Order:OrderAddress": "Địa chỉ đặt hàng",
+    "Order:OrderEmail": "Email",
+    "Order:OrderDate": "Ngày đặt hàng",
+    "Order:Status": "Trạng thái đặt hàng",
+    "Order:CustomerName": "Tên người đặt hàng",
 
     "OrderDetail": "Chi tiết đơn hàng",
     "OrderDetail:Price": "Giá thành",
@@ -48,8 +50,10 @@
 
     "Category": "Danh mục",
     "Category:Name": "Tên hãng",
+    "Category:Note": "Ghi chú",
     "Category:Decription": "Mô tả",
-    "Category:Thumbnail": "Ảnh nhỏ", 
+    "Category:Thumbnail": "Biểu tượng", 
+    "Category:Create": "Thêm thể loại",
 
     "Product": "Sản phẩm",
     "Product:Name": "Tên sản phẩm",
@@ -68,6 +72,7 @@
     "LongWelcomeMessage": "Chào mừng đến với CNTTC Zone. Đây là nơi mà bạn có thể tìm thấy chiếc điện thoại yêu thích của mình.",
     "Key": "Từ khóa",
     "PlaceHolder": "Nhập từ khóa",
-    "Search": "Tìm kiếm"
+    "Search": "Tìm kiếm",
+    "All":  "Tất cả"
   }
 }

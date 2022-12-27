@@ -2,6 +2,7 @@
     var l = abp.localization.getResource('Ecommerce');
     var _service = ecommerce.orders.order;
     var _dataTable = null;
+    var DateNow = new Date();
 
     abp.ui.extensions.entityActions.get('order').addContributor(
         function (actionList) {
@@ -72,8 +73,12 @@
         0 //adds as the first contributor
     );
 
-    $(function () {
+    $(async function () {
         var _$wrapper = $('#OrdersWrapper');
+        var input = {
+            customerId: $($('#Customers').get(0)).val(),
+            orderDate: $('#OrderDate').val() ? $('#OrderDate').val() : DateNow
+        }
 
         _dataTable = _$wrapper.find('table').DataTable(
             abp.libs.datatables.normalizeConfiguration({
@@ -81,10 +86,39 @@
                 processing: true,
                 paging: true,
                 scrollX: true,
+                searching: false,
                 serverSide: true,
-                ajax: abp.libs.datatables.createAjax(_service.search),
+                ajax: abp.libs.datatables.createAjax(_service.search, function () {
+                    return input;
+                }),
                 columnDefs: abp.ui.extensions.tableColumns.get('order').columns.toArray(),
             })
         );
+
+        $('#Customers').select2({
+            placeholder: 'Select an option',
+            multiple: false
+        });
+
+        $('.dataTable_filters').append(
+            '<div id="DataTables_Table_0_filter" class="dataTables_filter">' +
+                '<label>' +
+                    'Tìm kiếm ' +
+            '<input type="date" id="OrderDate" class="form-control form-control-sm" min="2018-01-01" aria - controls="DataTables_Table_0" value="' + DateNow.getFullYear() + '-' + DateNow.getMonth() + '-' + DateNow.getDate() +'">' +
+                '</label>' +
+            '</div > '
+        );
+
+        $('#DataTables_Table_0_filter input').on('change', function () {
+            input.orderDate = $('#OrderDate').val();
+            input.customerId = $($('#Customers').get(0)).val();
+            _dataTable.ajax.reload();
+        });
+
+        $('#Customers').on('change', function (e) {
+            input.orderDate = $('#OrderDate').val();
+            input.customerId = $(e.currentTarget).val();
+            _dataTable.ajax.reload();
+        });
     });
 })();

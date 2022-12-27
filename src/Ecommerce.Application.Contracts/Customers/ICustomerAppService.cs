@@ -1,5 +1,6 @@
 ﻿using Ecommerce.Customers.Dtos;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
@@ -11,5 +12,7 @@ namespace Ecommerce.Customers
         Task<CustomerDto> CheckLoginAsync(string email, string password);
 
         Task<PagedResultDto<CustomerDto>> SearchAsync(CustomerSearchDto condition);
+
+        Task<List<CustomerDto>> GetAllCustomerAsync();
     }
 }
