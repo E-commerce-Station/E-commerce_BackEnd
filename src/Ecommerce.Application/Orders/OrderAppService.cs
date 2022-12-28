@@ -37,10 +37,10 @@ namespace Ecommerce.Orders
             return listResultDto;
         }
 
-        public override Task<OrderDto> CreateAsync(CreateUpdateOrderDto input)
+       /* public override Task<OrderDto> CreateAsync(CreateUpdateOrderDto input)
         {
             input.Ammount = input.OrderDetailDtos.Select(x => x.Quantity).Sum();
             return base.CreateAsync(input);
-        }
+        }*/
     }
 }
